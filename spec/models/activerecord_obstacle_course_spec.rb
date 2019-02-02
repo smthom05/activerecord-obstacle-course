@@ -278,7 +278,8 @@ describe 'ActiveRecord Obstacle Course' do
 
     # ------------------ Using ActiveRecord ----------------------
     # Solution goes here
-    grouped_items = @order_3.items.group(:name)
+    grouped_items = @order_3.items.order(:name)
+    # grouped_items = @order_3.items.group(:name)
     # ------------------------------------------------------------
 
     # Expectation
@@ -294,6 +295,7 @@ describe 'ActiveRecord Obstacle Course' do
 
     # ------------------ Using ActiveRecord ----------------------
     # Solution goes here
+    names = Item.pluck(:name)
     # ------------------------------------------------------------
 
     # Expectation
@@ -320,17 +322,19 @@ describe 'ActiveRecord Obstacle Course' do
     ]
 
     # ----------------------- Using Ruby -------------------------
-    names = Order.all.map do |order|
-      if order.items
-        order.items.map { |item| item.name }
-      end
-    end
-
-    names = names.flatten
+    # names = Order.all.map do |order|
+    #   if order.items
+    #     order.items.map { |item| item.name }
+    #   end
+    # end
+    #
+    # names = names.flatten
     # ------------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
     # Solution goes here
+
+    names = Order.joins(:items).pluck(:name)
     # ------------------------------------------------------------
 
     # Expectation
@@ -368,6 +372,7 @@ describe 'ActiveRecord Obstacle Course' do
 
     # ------------------ Using ActiveRecord ----------------------
     # Solution goes here
+    users = User.joins(:order_items).where(order_items: {item_id: @item_8}).distinct.pluck(:name)
     # ------------------------------------------------------------
 
     # Expectation
