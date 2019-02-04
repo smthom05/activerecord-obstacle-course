@@ -278,8 +278,8 @@ describe 'ActiveRecord Obstacle Course' do
 
     # ------------------ Using ActiveRecord ----------------------
     # Solution goes here
-    grouped_items = @order_3.items.order(:name)
-    # grouped_items = @order_3.items.group(:name)
+    # grouped_items = @order_3.items.order(:name)
+    grouped_items = Order.find(@order_3.id).items.order(:name)
     # ------------------------------------------------------------
 
     # Expectation
@@ -383,12 +383,13 @@ describe 'ActiveRecord Obstacle Course' do
     expected_result = ['Thing 1', 'Thing 6', 'Thing 7', 'Thing 10']
 
     # ----------------------- Using Ruby -------------------------
-    names = Order.last.items.all.map(&:name)
-    names.sort_by! { |x| x[/\d+/].to_i }
+    # names = Order.last.items.all.map(&:name)
+    # names.sort_by! { |x| x[/\d+/].to_i }
     # ------------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
     # Solution goes here
+    names = Order.last.items.order(:id).distinct.pluck(:name)
     # ------------------------------------------------------------
 
     # Expectation
@@ -413,6 +414,7 @@ describe 'ActiveRecord Obstacle Course' do
 
     # ------------------ Using ActiveRecord ----------------------
     # Solution goes here
+
     # ------------------------------------------------------------
 
     # Expectation
