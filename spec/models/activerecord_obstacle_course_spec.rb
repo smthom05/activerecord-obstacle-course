@@ -526,9 +526,8 @@ describe 'ActiveRecord Obstacle Course' do
 
     # ------------------ Improved Solution ----------------------
     #  Solution goes here
-    # binding.pry
-    orders = Order.joins(:order_items).where(user_id: @user_2.id).where('order_items.item_id = ?', @item_4)
-    # orders = @user_2.orders.joins(:order_items).where('order_items.item_id = ?', @item_4.id)
+    # orders = Order.joins(:order_items).where(user_id: @user_2.id).where('order_items.item_id = ?', @item_4)
+    orders = @user_2.orders.joins(:order_items).where('order_items.item_id = ?', @item_4.id)
     # -----------------------------------------------------------
 
     # Expectation
