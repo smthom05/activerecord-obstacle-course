@@ -616,7 +616,10 @@ describe 'ActiveRecord Obstacle Course' do
     # Sal        |         5
 
     # ------------------ ActiveRecord Solution ----------------------
-    custom_results = Order.joins(:user).select('users.name, COUNT(orders.user_id) as total_order_count').group(:user_id).order('users.name asc')
+    custom_results = Order.joins(:user)
+                          .select('users.name, COUNT(orders.user_id) as total_order_count')
+                          .group(:user_id)
+                          .order('users.name asc')
     # ---------------------------------------------------------------
 
     expect(custom_results[0].name).to eq(@user_2.name)
@@ -639,7 +642,10 @@ describe 'ActiveRecord Obstacle Course' do
     # Ian        |         20
 
     # ------------------ ActiveRecord Solution ----------------------
-    custom_results = OrderItem.joins(order: :user).select('users.name, COUNT(order_items.item_id) as total_item_count').group(:user_id).order('users.name desc')
+    custom_results = OrderItem.joins(order: :user)
+                              .select('users.name, COUNT(order_items.item_id) as total_item_count')
+                              .group(:user_id)
+                              .order('users.name desc')
     # ---------------------------------------------------------------
 
     expect(custom_results[0].name).to eq(@user_3.name)
@@ -687,7 +693,9 @@ describe 'ActiveRecord Obstacle Course' do
     # ------------------ ActiveRecord Solution ----------------------
     data = User.joins(orders: {order_items: :item})
                .select('users.name as user_name, orders.id as order_id, (orders.amount / COUNT(order_items.id)) as avg_item_cost')
-               .group(:name, :order_id).order(name: :desc).order('order_id asc')
+               .group(:name, :order_id)
+               .order(name: :desc)
+               .order('order_id asc')
     # ---------------------------------------------------------------
 
     expect([data[0].user_name,data[0].order_id,data[0].avg_item_cost]).to eq([@user_3.name, @order_3.id, 125])
